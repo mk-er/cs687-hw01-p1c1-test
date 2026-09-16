@@ -26,7 +26,7 @@ The incomplete locations contain `TODO` comments and raise
 
 Open `notebooks/homework01_colab.ipynb` in Google Colab and run it from top to
 bottom. Its setup cell clones this repository and installs the required Python
-packages. This test copy clones the fixed `v0.5-test` release from `mk-er`.
+packages. This test copy clones the fixed `v0.6-test` release from `mk-er`.
 
 The notebook lets you develop the two functions interactively. Before
 submitting, copy those implementations into `cs687/tokenizer.py` and
