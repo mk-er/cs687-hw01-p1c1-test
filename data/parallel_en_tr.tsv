@@ -1,0 +1,106 @@
+> This file is a parallel corpus written for CS 687. Each line holds one English sentence and its Turkish translation, separated by a tab character. Lines beginning with a greater-than sign are comments and are skipped by the loader.
+>
+> These sentences were written for this course rather than taken from an existing corpus, so they may be copied, modified, and redistributed freely by anyone taking or teaching CS 687. They deliberately mix everyday vocabulary with academic and technical vocabulary, and they include many Turkish words that carry several suffixes, because the fertility effect is clearest exactly there.
+>
+> To extend this file, simply add lines in the same format. Roughly one hundred pairs is enough for a stable measurement; more pairs tighten the estimate.
+The model reads the text and predicts the next word.	Model metni okuyor ve sonraki kelimeyi tahmin ediyor.
+We are evaluating the work of our students this week.	Bu hafta öğrencilerimizin çalışmalarını değerlendiriyoruz.
+The road from your houses to the university passes through the city.	Evlerinizden üniversiteye giden yol şehrin içinden geçiyor.
+The students are studying deep learning topics in our course.	Öğrenciler dersimizde derin öğrenme konularını çalışıyorlar.
+We put our books on the table and then went to the classroom.	Kitaplarımızı masanın üzerine koyduk ve sonra sınıfa gittik.
+Computers turn text into numbers and models read those numbers.	Bilgisayarlar metinleri sayılara çeviriyor ve modeller bu sayıları okuyor.
+The researchers at the university published their new results.	Üniversitedeki araştırmacılar yeni sonuçlarını yayınladılar.
+We are explaining the methods we used in our studies.	Çalışmalarımızda kullandığımız yöntemleri anlatıyoruz.
+We are doing experiments in the laboratory together with our friends.	Arkadaşlarımızla birlikte laboratuvarda deneyler yapıyoruz.
+Our teacher listened to our questions carefully and answered them.	Öğretmenimiz sorularımızı dikkatle dinledi ve cevapladı.
+The suffixes added to the end of words change the meaning.	Kelimelerin sonuna eklenen ekler anlamı değiştiriyor.
+There is a large tree and a small table in the garden of our house.	Evimizin bahçesinde büyük bir ağaç ve küçük bir masa var.
+Thousands of students study in the schools of our cities.	Şehirlerimizdeki okullarda binlerce öğrenci okuyor.
+After reading what we had written, we made our corrections.	Yazdıklarımızı okuduktan sonra düzeltmelerimizi yaptık.
+Every word in this sentence is used frequently in Turkish.	Bu cümledeki her kelime Türkçede sıkça kullanılıyor.
+In our future studies we will deepen this subject.	Gelecekteki çalışmalarımızda bu konuyu derinleştireceğiz.
+We work very hard in order to explain what we have understood.	Anlayabildiklerimizi anlatabilmek için çok çalışıyoruz.
+The children were reading a book about animals and plants.	Çocuklar hayvanlar ve bitkiler hakkında bir kitap okuyorlardı.
+People who speak more than one language often notice these problems.	Birden fazla dil konuşanlar bu sorunları sıklıkla fark ediyorlar.
+The computer processes the sequence one position at a time.	Bilgisayar diziyi her seferinde bir konum işliyor.
+Words that appear often become single tokens and rare words are split.	Sık görülen kelimeler tek parça oluyor ve nadir kelimeler bölünüyor.
+Training a model requires computing the loss and following the gradient.	Bir modeli eğitmek kaybı hesaplamayı ve eğimi takip etmeyi gerektiriyor.
+The teacher asked the students to write their answers on the board.	Öğretmen öğrencilerden cevaplarını tahtaya yazmalarını istedi.
+Information theory tells us that prediction and compression are the same.	Bilgi kuramı bize tahmin ile sıkıştırmanın aynı olduğunu söylüyor.
+We can measure the number of tokens produced for each word of text.	Metnin her kelimesi için üretilen parça sayısını ölçebiliriz.
+My friend came to our house yesterday evening and stayed until morning.	Arkadaşım dün akşam evimize geldi ve sabaha kadar kaldı.
+The examination will be held in the largest hall of the building.	Sınav binanın en büyük salonunda yapılacak.
+I could not finish the work I had started because of the rain.	Yağmur yüzünden başladığım işi bitiremedim.
+Those who wish to participate should write their names on this list.	Katılmak isteyenler isimlerini bu listeye yazmalıdır.
+The train leaving from the station arrives in the capital in the morning.	İstasyondan kalkan tren başkente sabah varıyor.
+We were surprised by the results we obtained from our experiments.	Deneylerimizden elde ettiğimiz sonuçlara şaşırdık.
+The new method works faster than the one described in the article.	Yeni yöntem makalede anlatılandan daha hızlı çalışıyor.
+It is difficult to explain this idea without using mathematics.	Bu fikri matematik kullanmadan açıklamak zordur.
+The photographs taken during the trip are in the box on the shelf.	Gezi sırasında çekilen fotoğraflar raftaki kutunun içinde.
+Everyone who worked on this project deserves to be congratulated.	Bu projede çalışan herkes tebrik edilmeyi hak ediyor.
+The doctor said that the medicine should be taken after meals.	Doktor ilacın yemeklerden sonra alınması gerektiğini söyledi.
+I forgot the name of the street where the old library stands.	Eski kütüphanenin bulunduğu sokağın adını unuttum.
+The letters written by my grandmother are kept in this drawer.	Büyükannemin yazdığı mektuplar bu çekmecede saklanıyor.
+We could not understand why the program stopped working suddenly.	Programın neden aniden çalışmayı durdurduğunu anlayamadık.
+The number of people living in this neighbourhood has doubled.	Bu mahallede yaşayanların sayısı iki katına çıktı.
+She explained the subject so clearly that everyone understood it.	Konuyu o kadar açık anlattı ki herkes anladı.
+The bridge connecting the two sides of the city was built last year.	Şehrin iki yakasını birleştiren köprü geçen yıl yapıldı.
+The problems we could not solve were left for the next meeting.	Çözemediğimiz sorunlar bir sonraki toplantıya bırakıldı.
+Water boils at one hundred degrees under normal atmospheric pressure.	Su normal atmosfer basıncında yüz derecede kaynıyor.
+The students who finished early helped the ones who were still working.	Erken bitiren öğrenciler hâlâ çalışanlara yardım ettiler.
+It began to rain just as we were leaving the building.	Tam binadan çıkarken yağmur yağmaya başladı.
+The company announced that it would open a new office in the city.	Şirket şehirde yeni bir ofis açacağını duyurdu.
+I would like to thank everyone who supported us during this work.	Bu çalışma sırasında bize destek olan herkese teşekkür etmek istiyorum.
+The books on the top shelf have not been touched for many years.	Üst raftaki kitaplara uzun yıllardır dokunulmadı.
+He said that he had never seen such a beautiful garden before.	Daha önce hiç bu kadar güzel bir bahçe görmediğini söyledi.
+Please close the window before you leave the room.	Lütfen odadan çıkmadan önce pencereyi kapatın.
+The results of the measurements were written in the notebook.	Ölçümlerin sonuçları deftere yazıldı.
+The village where my father was born is on the other side of the mountain.	Babamın doğduğu köy dağın diğer tarafında.
+We are trying to understand how these systems make their decisions.	Bu sistemlerin kararlarını nasıl verdiğini anlamaya çalışıyoruz.
+The lecture will begin at nine o'clock in the morning.	Ders sabah dokuzda başlayacak.
+The pictures drawn by the children were hung on the wall.	Çocukların çizdiği resimler duvara asıldı.
+Nobody knew what would happen after the meeting ended.	Toplantı bittikten sonra ne olacağını kimse bilmiyordu.
+The food cooked by my mother tastes better than anything else.	Annemin pişirdiği yemek her şeyden daha lezzetli.
+The scientists who discovered this effect received an award.	Bu etkiyi keşfeden bilim insanları bir ödül aldılar.
+It is necessary to read the instructions before starting the experiment.	Deneye başlamadan önce yönergeleri okumak gerekiyor.
+The keys I was looking for were in my coat pocket all along.	Aradığım anahtarlar baştan beri ceketimin cebindeymiş.
+Students who cannot attend the lecture should inform the assistant.	Derse katılamayan öğrenciler asistana haber vermelidir.
+The temperature dropped so quickly that the lake froze overnight.	Sıcaklık o kadar hızlı düştü ki göl bir gecede dondu.
+We discussed the questions that had come up during the reading.	Okuma sırasında ortaya çıkan soruları tartıştık.
+This building was designed by an architect from our own city.	Bu bina kendi şehrimizden bir mimar tarafından tasarlandı.
+The equipment we ordered has not arrived at the laboratory yet.	Sipariş ettiğimiz ekipman henüz laboratuvara ulaşmadı.
+The song that was playing reminded me of my childhood.	Çalan şarkı bana çocukluğumu hatırlattı.
+Everything that was said at the meeting was written down carefully.	Toplantıda söylenen her şey dikkatle yazıldı.
+The path leading to the top of the hill is closed in winter.	Tepenin zirvesine çıkan patika kışın kapalı.
+I am grateful to those who read the earlier version of this text.	Bu metnin önceki hâlini okuyanlara minnettarım.
+The machine that we repaired last month broke down again.	Geçen ay tamir ettiğimiz makine yine bozuldu.
+We should compare our results with the ones published previously.	Sonuçlarımızı daha önce yayımlananlarla karşılaştırmalıyız.
+The letter arrived three weeks after it had been posted.	Mektup postalandıktan üç hafta sonra ulaştı.
+The children playing in the street did not notice the car.	Sokakta oynayan çocuklar arabayı fark etmediler.
+This approach differs from the previous one in three important ways.	Bu yaklaşım öncekinden üç önemli açıdan farklıdır.
+The teacher explained the difference between these two concepts.	Öğretmen bu iki kavram arasındaki farkı açıkladı.
+Please write down the numbers you measured during the experiment.	Lütfen deney sırasında ölçtüğünüz sayıları yazın.
+The window in the kitchen has been broken since last winter.	Mutfaktaki pencere geçen kıştan beri kırık.
+Nobody expected the experiment to succeed on the first attempt.	Kimse deneyin ilk denemede başaracağını beklemiyordu.
+We are looking for a solution that works for every case.	Her durumda işe yarayan bir çözüm arıyoruz.
+The map showing the location of the building is on the website.	Binanın yerini gösteren harita internet sitesinde.
+The people waiting outside were invited into the hall.	Dışarıda bekleyenler salona davet edildi.
+He could not remember where he had left his notebook.	Defterini nerede bıraktığını hatırlayamadı.
+The measurements taken at night were more accurate than the others.	Gece alınan ölçümler diğerlerinden daha doğruydu.
+This is the most interesting question that anyone has asked today.	Bu bugün sorulan en ilginç soru.
+The flowers that we planted in spring have already bloomed.	İlkbaharda diktiğimiz çiçekler çoktan açtı.
+We must finish this work before the end of the month.	Bu işi ay sonundan önce bitirmeliyiz.
+The information given in the table contradicts the text.	Tabloda verilen bilgi metinle çelişiyor.
+The old man sitting by the window was reading a newspaper.	Pencerenin yanında oturan yaşlı adam gazete okuyordu.
+Our group has been working on this problem for two years.	Grubumuz iki yıldır bu problem üzerinde çalışıyor.
+The class was cancelled because the instructor was ill.	Öğretim üyesi hasta olduğu için ders iptal edildi.
+Everyone agreed that the presentation had been very clear.	Herkes sunumun çok açık olduğu konusunda hemfikirdi.
+The tools needed for this task are kept in the cupboard.	Bu iş için gereken aletler dolapta duruyor.
+She wrote her answers without looking at her notes.	Cevaplarını notlarına bakmadan yazdı.
+The results we are reporting here can be reproduced easily.	Burada bildirdiğimiz sonuçlar kolayca tekrarlanabilir.
+The city where the conference will be held is by the sea.	Konferansın yapılacağı şehir deniz kenarında.
+I did not understand the last part of the explanation.	Açıklamanın son kısmını anlamadım.
+The documents that were sent yesterday must be signed today.	Dün gönderilen belgeler bugün imzalanmalı.
+Those who arrive late will not be allowed into the examination.	Geç gelenler sınava alınmayacak.
+The difference between the two measurements was very small.	İki ölçüm arasındaki fark çok küçüktü.
+We are planning to repeat the experiment with different settings.	Deneyi farklı ayarlarla tekrarlamayı planlıyoruz.
