@@ -12,25 +12,27 @@ graphics card is not required.
 
 ## What you must implement
 
-There are two incomplete tasks:
+There are two incomplete tasks in the Colab notebook:
 
-| task | file | function |
+| task | tagged notebook cell | function or class |
 |---|---|---|
-| Task 1 | `cs687/tokenizer.py` | `BPETokenizer.train` |
-| Task 2 | `cs687/data.py` | `NextTokenDataset.__init__` |
+| Task 1 | `answer-task-1` | `BPETokenizer.train` |
+| Task 2 | `answer-task-2` | `NextTokenDataset.__init__` |
 
-The incomplete locations contain `TODO` comments and raise
-`NotImplementedError`. The surrounding modules are supplied complete.
+The answer cells contain `NotImplementedError` placeholders. The surrounding
+code is supplied complete. Your completed notebook is the authoritative code
+submission; you do not need to copy its implementations into `.py` files.
 
 ## Recommended route: Google Colab
 
 Open `notebooks/homework01_colab.ipynb` in Google Colab and run it from top to
 bottom. Its setup cell clones this repository and installs the required Python
-packages. This test copy clones the fixed `v0.6-test` release from `mk-er`.
+packages. This test copy clones the fixed `v0.7-test` release from `mk-er`.
 
-The notebook lets you develop the two functions interactively. Before
-submitting, copy those implementations into `cs687/tokenizer.py` and
-`cs687/data.py`, then run the repository tests.
+The notebook lets you develop both implementations interactively. Near the end,
+one cell runs all 31 public tests against the implementations currently loaded
+in the notebook. Run that cell inside the notebook: a separate `pytest` process
+cannot see definitions that exist only in the notebook kernel.
 
 ## Optional local route
 
@@ -52,61 +54,48 @@ On macOS or Linux, activate it with:
 source .venv/bin/activate
 ```
 
-Then install and test:
+Then install the dependencies and open the notebook:
 
 ```text
 python -m pip install -r requirements.txt
-python -m pytest -q
+python -m pip install jupyterlab
+python -m jupyter lab notebooks/homework01_colab.ipynb
 ```
 
-The repository contains 31 tests. At the beginning, 24 failures in
-`test_tokenizer.py` and `test_data.py` are expected because Tasks 1 and 2 are
-incomplete. The seven tests for the supplied embedding and unit-conversion code
-should already pass.
+The notebook workflow is the same locally and in Colab. Complete the tagged
+answer cells and use the notebook's public-test cell. The tests remain visible
+under `tests/`, but running them in a new shell process tests the untouched
+module skeletons rather than your in-memory notebook answers.
 
 ## Homework workflow
 
 1. Read the Lecture 1 notes.
-2. Complete Task 1 and run:
-
-   ```text
-   python -m pytest tests/test_tokenizer.py -q
-   ```
-
-3. Run the tokenizer investigations:
-
-   ```text
-   python scripts/inspect_merges.py
-   python scripts/fertility.py
-   ```
-
-4. Complete Task 2 and run:
-
-   ```text
-   python -m pytest tests/test_data.py -q
-   ```
-
-5. Run the full included test suite:
-
-   ```text
-   python -m pytest -q
-   ```
-
-6. Complete `REPORT.md`.
+2. Complete Task 1 in the `answer-task-1` cell and work through the tokenizer
+   investigations that follow it.
+3. Complete Task 2 in the `answer-task-2` cell and work through the remaining
+   notebook experiments.
+4. Restart the runtime and run the complete notebook from top to bottom.
+5. Confirm that the public-test cell reports all 31 tests passing.
+6. Download the completed `.ipynb` file and complete the separate report
+   template.
 
 Do not modify the tests to make an implementation pass. The tests describe the
 required behavior and grading uses a staff-controlled copy.
 
 ## Deliverables
 
-- working implementations of Tasks 1 and 2;
+- the completed Homework 1 notebook, including working implementations in both
+  tagged answer cells;
 - all 31 included tests passing;
-- the fertility table and two-sentence reflection;
+- a separate completed report containing the fertility table and two-sentence
+  reflection;
 - three comparisons with the GPT-2 tokenizer; and
-- answers to comprehension questions A–D in `REPORT.md`.
+- answers to comprehension questions A–D in the report.
 
-The submission location and procedure will be announced separately. Do not
-submit the virtual environment, caches, or generated Python bytecode.
+The notebook and report will be submitted through Moodle. Their exact filenames,
+the final report format, and the upload procedure will be announced before
+release. Do not submit the cloned repository, virtual environment, caches, or
+generated Python bytecode.
 
 ## What happens in Homework 2
 
@@ -118,10 +107,10 @@ matches the canonical one.
 ## Repository layout
 
 ```text
-cs687/       implementation files
-tests/       public tests for this homework
+cs687/       supplied implementation modules used by the notebook
+tests/       inspectable public tests run by the notebook
 scripts/     tokenizer inspection and fertility experiments
 data/        the English–Turkish parallel corpus
-notebooks/   the Colab entry point
-REPORT.md    the Homework 1 report template
+notebooks/   the Colab entry point and authoritative code submission
+REPORT.md    the current report template (final format still to be chosen)
 ```
