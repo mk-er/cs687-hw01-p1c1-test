@@ -1,8 +1,8 @@
 """
 Tests for Task 1: BPETokenizer.train
 
-Run them with:      pytest -v
-Run only these:     pytest tests/test_tokenizer.py -v
+The Homework 1 notebook runs this file inside its current kernel after attaching
+the student's answer. Course staff may also run it against a canonical solution.
 
 Each test states in its docstring which part of the notes it checks.
 """
@@ -125,7 +125,7 @@ def test_fertility_is_higher_for_an_untrained_language():
     """Section 2.3: a tokenizer spends its merges on what it saw in training.
 
     An English-trained tokenizer needs more tokens per word on Turkish text
-    than on English text. This is the effect you measure in the lab.
+    than on English text. This is the effect you measure in the homework notebook.
     """
     english = (
         "the model reads the text and predicts the next token in the sequence "
@@ -204,7 +204,7 @@ def test_the_literal_string_becomes_the_special_id_and_that_is_the_sharp_edge():
     """Documented behaviour, not an accident: with the token registered, its
     literal appearance in ordinary text is treated as the boundary. Production
     tokenizers guard this behind an allowed-specials switch; ours keeps the
-    edge visible so Week 12 can point at it."""
+    edge visible so Lecture 12 can point at it."""
     tok = _trained()
     tok.add_special_tokens(("<|endoftext|>",))
     ids = tok.encode("an email quoting <|endoftext|> verbatim")
