@@ -6,9 +6,13 @@ from cs687 import InputEmbedding
 
 
 def test_output_shape():
-    """The end-of-lab check: (B, T) integers in, (B, T, d_model) floats out."""
+    """The homework check: (B, T) integers in, (B, T, d_model) floats out."""
     emb = InputEmbedding(vocab_size=500, d_model=64, max_len=128)
-    assert emb(torch.randint(0, 500, (4, 16))).shape == (4, 16, 64)
+    output_shape = emb(torch.randint(0, 500, (4, 16))).shape
+    assert output_shape == (4, 16, 64), (
+        "InputEmbedding must append d_model as the final dimension while "
+        f"preserving batch and sequence dimensions. Received {tuple(output_shape)}."
+    )
 
 
 def test_embedding_lookup_selects_a_column():
@@ -20,7 +24,10 @@ def test_embedding_lookup_selects_a_column():
         one_hot = torch.zeros(1, 10)
         one_hot[0, 3] = 1.0
         via_matmul = one_hot @ emb.tok.weight
-    assert torch.allclose(direct, via_matmul, atol=1e-6)
+    assert torch.allclose(direct, via_matmul, atol=1e-6), (
+        "Looking up a token embedding should match multiplying its one-hot "
+        "vector by the embedding weight matrix."
+    )
 
 
 def test_the_same_token_differs_by_position():
@@ -28,11 +35,14 @@ def test_the_same_token_differs_by_position():
     emb.eval()
     with torch.no_grad():
         out = emb(torch.tensor([[5, 5]]))
-    assert not torch.allclose(out[0, 0], out[0, 1])
+    assert not torch.allclose(out[0, 0], out[0, 1]), (
+        "The same token at two positions should receive different final input "
+        "representations because positional information is added."
+    )
 
 
 def test_refuses_sequences_longer_than_max_len():
-    """Learned absolute positions cannot extrapolate. Week 2 fixes this."""
+    """Learned absolute positions cannot extrapolate. Lecture 2 addresses this."""
     emb = InputEmbedding(vocab_size=10, d_model=8, max_len=4)
     with pytest.raises(ValueError):
         emb(torch.randint(0, 10, (1, 5)))

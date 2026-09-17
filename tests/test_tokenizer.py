@@ -28,20 +28,29 @@ def test_train_learns_requested_number_of_merges():
     """After training there should be exactly as many rules as requested."""
     tok = BPETokenizer()
     tok.train("the model predicts the next token in the sequence " * 20, 20)
-    assert len(tok.merges) == 20
+    assert len(tok.merges) == 20, (
+        f"Training requested 20 merges, but the tokenizer learned {len(tok.merges)}."
+    )
 
 
 def test_new_ids_start_at_256_and_increase():
     """Ids 0 to 255 are the raw bytes, so the first new symbol must be 256."""
     tok = BPETokenizer()
     tok.train("abababababab " * 30, 5)
-    assert sorted(tok.merges.values()) == [256, 257, 258, 259, 260]
+    learned_ids = sorted(tok.merges.values())
+    assert learned_ids == [256, 257, 258, 259, 260], (
+        "New merge identifiers must start at 256 and increase by one. "
+        f"Received {learned_ids}."
+    )
 
 
 def test_vocab_grows_by_one_per_merge():
     tok = BPETokenizer()
     tok.train("the quick brown fox jumps over the lazy dog " * 30, 15)
-    assert tok.vocab_size == 256 + 15
+    assert tok.vocab_size == 256 + 15, (
+        "The vocabulary must begin with 256 byte symbols and grow by one "
+        f"for each learned merge. Received vocabulary size {tok.vocab_size}."
+    )
 
 
 def test_merged_symbol_is_concatenation_of_its_parts():
@@ -49,7 +58,12 @@ def test_merged_symbol_is_concatenation_of_its_parts():
     tok = BPETokenizer()
     tok.train("abababababab " * 30, 3)
     for (a, b), new_id in tok.merges.items():
-        assert tok.vocab[new_id] == tok.vocab[a] + tok.vocab[b]
+        expected = tok.vocab[a] + tok.vocab[b]
+        assert tok.vocab[new_id] == expected, (
+            f"Merged symbol {new_id} should represent the concatenation of "
+            f"symbols {a} and {b}: expected {expected!r}, received "
+            f"{tok.vocab[new_id]!r}."
+        )
 
 
 def test_hand_trace_first_merge_is_ug():
@@ -57,7 +71,11 @@ def test_hand_trace_first_merge_is_ug():
     tok = BPETokenizer()
     tok.train(HAND_TRACE_CORPUS, 1)
     (a, b), _ = next(iter(tok.merges.items()))
-    assert bytes([a]) + bytes([b]) == b"ug"
+    first_merge = bytes([a]) + bytes([b])
+    assert first_merge == b"ug", (
+        "The first learned merge should be b'ug', the most frequent adjacent "
+        f"pair in the hand-trace corpus. Received {first_merge!r}."
+    )
 
 
 def test_hand_trace_first_three_merges():
@@ -65,7 +83,10 @@ def test_hand_trace_first_three_merges():
     tok = BPETokenizer()
     tok.train(HAND_TRACE_CORPUS, 3)
     learned = [tok.vocab[i] for i in sorted(tok.merges.values())]
-    assert learned == [b"ug", b"un", b"hug"]
+    assert learned == [b"ug", b"un", b"hug"], (
+        "The first three learned symbols should match the hand trace in "
+        f"Section 2.2. Received {learned}."
+    )
 
 
 def test_round_trip_ascii():
@@ -73,7 +94,11 @@ def test_round_trip_ascii():
     tok = BPETokenizer()
     tok.train("the model predicts the next token " * 40, 50)
     for text in ["hello world", "the model", "", "a", "zzz qqq"]:
-        assert tok.decode(tok.encode(text)) == text
+        decoded = tok.decode(tok.encode(text))
+        assert decoded == text, (
+            f"Encoding and then decoding {text!r} must reproduce it exactly; "
+            f"received {decoded!r}."
+        )
 
 
 def test_round_trip_unicode_and_emoji():
@@ -91,14 +116,22 @@ def test_round_trip_unicode_and_emoji():
         "na\u00efve caf\u00e9 \u2014 \u4e2d\u6587 \u2014 \u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
         "tokens \U0001f9e9 and \U0001f680 emoji",
     ]:
-        assert tok.decode(tok.encode(text)) == text
+        decoded = tok.decode(tok.encode(text))
+        assert decoded == text, (
+            "UTF-8 text must survive an encode-decode round trip exactly. "
+            f"Input: {text!r}; decoded: {decoded!r}."
+        )
 
 
 def test_unseen_word_still_encodes():
     """The open-vocabulary property: nothing is ever unrepresentable."""
     tok = BPETokenizer()
     tok.train(HAND_TRACE_CORPUS, 3)
-    assert tok.decode(tok.encode("bug")) == "bug"
+    decoded = tok.decode(tok.encode("bug"))
+    assert decoded == "bug", (
+        "A byte-level tokenizer must represent unseen words losslessly. "
+        f"Encoding and decoding 'bug' produced {decoded!r}."
+    )
 
 
 def test_merges_shorten_encodings():
@@ -110,15 +143,24 @@ def test_merges_shorten_encodings():
         if k:
             tok.train(text, k)
         lengths.append(len(tok.encode("the model predicts the next token")))
-    assert lengths[0] >= lengths[1] >= lengths[2]
-    assert lengths[2] < lengths[0]
+    assert lengths[0] >= lengths[1] >= lengths[2], (
+        "Adding learned merges must not lengthen this training-like example. "
+        f"Token counts for 0, 10, and 40 merges were {lengths}."
+    )
+    assert lengths[2] < lengths[0], (
+        "Forty learned merges should shorten this training-like example "
+        f"relative to raw bytes. Token counts were {lengths}."
+    )
 
 
 def test_train_stops_early_when_no_pairs_remain():
     """Asking for more merges than are possible must not raise an error."""
     tok = BPETokenizer()
     tok.train("aa", 50)
-    assert len(tok.merges) < 50
+    assert len(tok.merges) < 50, (
+        "Training should stop when no adjacent pairs remain, even when more "
+        f"merges were requested. It recorded {len(tok.merges)} merges."
+    )
 
 
 def test_fertility_is_higher_for_an_untrained_language():
@@ -136,7 +178,11 @@ def test_fertility_is_higher_for_an_untrained_language():
     tok.train(english, 200)
     en = tok.fertility("we are evaluating the work of our students")
     tr = tok.fertility("\u00f6\u011frencilerimizin \u00e7al\u0131\u015fmalar\u0131n\u0131 de\u011ferlendiriyoruz")
-    assert tr > en
+    assert tr > en, (
+        "For this English-trained tokenizer, the supplied Turkish sentence "
+        f"should have higher fertility than the English sentence ({tr:.3f} "
+        f"versus {en:.3f})."
+    )
 
 
 def test_merges_never_cross_a_word_boundary():
@@ -149,8 +195,12 @@ def test_merges_never_cross_a_word_boundary():
     tok = BPETokenizer()
     tok.train("pug\npun\n" * 50, 10)
     learned = [tok.vocab[i] for i in sorted(tok.merges.values())]
-    assert b"gp" not in learned
-    assert b"np" not in learned
+    assert b"gp" not in learned, (
+        "A learned merge crossed the boundary between 'pug' and 'pun': b'gp'."
+    )
+    assert b"np" not in learned, (
+        "A learned merge crossed the boundary between 'pun' and 'pug': b'np'."
+    )
 
 
 def test_leading_space_makes_a_different_token():
@@ -164,7 +214,10 @@ def test_leading_space_makes_a_different_token():
     tok.train("the model reads the text and the model predicts " * 60, 60)
     with_space = tok.encode(" the")
     without_space = tok.encode("the")
-    assert with_space != without_space
+    assert with_space != without_space, (
+        "Pre-tokenization should allow ' the' and 'the' to have different "
+        "tokenizations after training."
+    )
 
 
 def _trained(merges=30):
@@ -177,27 +230,46 @@ def test_special_tokens_get_ids_above_every_merge():
     tok = _trained()
     ids = tok.add_special_tokens(("<|endoftext|>", "<|pad|>"))
     top_merge = max(tok.merges.values())
-    assert all(i > top_merge for i in ids.values())
-    assert len(set(ids.values())) == 2
+    assert all(i > top_merge for i in ids.values()), (
+        "Every special-token identifier must be greater than every learned "
+        f"merge identifier. Highest merge id: {top_merge}; special ids: {ids}."
+    )
+    assert len(set(ids.values())) == 2, (
+        f"Each registered special token needs a distinct identifier; received {ids}."
+    )
 
 
 def test_special_token_is_one_id_and_bypasses_the_merges():
     """The boundary is protocol, not text: one id with registration, many bytes without."""
     plain = _trained()
     many = plain.encode("<|endoftext|>")
-    assert len(many) > 1                       # ordinary bytes, ordinary merges
+    assert len(many) > 1, (
+        "Without special-token registration, '<|endoftext|>' should be encoded "
+        f"as multiple ordinary token ids. Encoding: {many}."
+    )
     tok = _trained()
     tok.add_special_tokens(("<|endoftext|>",))
     one = tok.encode("hug<|endoftext|>pun")
-    assert one.count(tok.special_tokens["<|endoftext|>"]) == 1
-    assert len([i for i in one if tok.is_special(i)]) == 1
+    special_id = tok.special_tokens["<|endoftext|>"]
+    assert one.count(special_id) == 1, (
+        "A registered special token should be encoded as exactly one occurrence "
+        f"of its special identifier. Encoding: {one}."
+    )
+    assert len([i for i in one if tok.is_special(i)]) == 1, (
+        "The example contains exactly one registered special token, so its "
+        f"encoding should contain exactly one special identifier. Encoding: {one}."
+    )
 
 
 def test_round_trip_survives_special_tokens():
     tok = _trained()
     tok.add_special_tokens(("<|endoftext|>",))
     text = "hug<|endoftext|> pun bug"
-    assert tok.decode(tok.encode(text)) == text
+    decoded = tok.decode(tok.encode(text))
+    assert decoded == text, (
+        "Registered special tokens must survive an encode-decode round trip. "
+        f"Expected {text!r}, received {decoded!r}."
+    )
 
 
 def test_the_literal_string_becomes_the_special_id_and_that_is_the_sharp_edge():
@@ -208,4 +280,7 @@ def test_the_literal_string_becomes_the_special_id_and_that_is_the_sharp_edge():
     tok = _trained()
     tok.add_special_tokens(("<|endoftext|>",))
     ids = tok.encode("an email quoting <|endoftext|> verbatim")
-    assert any(tok.is_special(i) for i in ids)
+    assert any(tok.is_special(i) for i in ids), (
+        "Once '<|endoftext|>' is registered, its literal appearance should be "
+        f"encoded with the registered special identifier. Encoding: {ids}."
+    )

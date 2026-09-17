@@ -27,7 +27,7 @@ submission; you do not need to copy its implementations into `.py` files.
 
 Open `notebooks/homework01_colab.ipynb` in Google Colab and run it from top to
 bottom. Its setup cell clones this repository and installs the required Python
-packages. This test copy clones the fixed `v0.13-test` release from `mk-er`.
+packages. This test copy clones the fixed `v0.14-test` release from `mk-er`.
 
 The notebook lets you develop both implementations interactively. A focused
 public-test cell follows each answer cell so that you receive feedback before
