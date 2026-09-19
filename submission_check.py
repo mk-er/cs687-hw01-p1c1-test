@@ -205,13 +205,18 @@ def check_submission(
         source = _source(cell)
         if spec.cell_type == "code" and "NotImplementedError" in source:
             findings.append(Finding(
-                "error",
-                f"Cell {spec.tag!r} is incomplete because it still contains NotImplementedError.",
+                "warning",
+                f"Cell {spec.tag!r} appears unanswered because it still contains NotImplementedError. "
+                "You may submit it, but unanswered work can receive zero points.",
             ))
         if spec.cell_type == "markdown":
             response = _report_response(source)
             if not response or REPORT_PLACEHOLDER in response:
-                findings.append(Finding("error", f"Cell {spec.tag!r} still has a blank report response."))
+                findings.append(Finding(
+                    "warning",
+                    f"Cell {spec.tag!r} has a blank report response. You may submit it, "
+                    "but an unanswered report item can receive zero points.",
+                ))
 
     template_by_id = {cell.get("id"): cell for cell in template_cells}
     spec_by_id = {spec.cell_id: spec for spec in ANSWER_SPECS}
@@ -306,7 +311,12 @@ def main(argv: list[str] | None = None) -> int:
         print("\nSTAFF INSPECTION REQUIRED: contact the course staff before submitting.")
         return 3
 
-    print("\nREADY: the notebook has the structure required by the grading system.")
+    warnings = [finding for finding in findings if finding.level == "warning"]
+    if warnings:
+        print("\nREADY WITH WARNINGS: the notebook has the structure required by the grading system.")
+        print("Review the warnings above; unanswered work may receive zero points.")
+    else:
+        print("\nREADY: the notebook has the structure required by the grading system.")
     print("This does not grade correctness; run all notebook checks as well.")
     return 0
 

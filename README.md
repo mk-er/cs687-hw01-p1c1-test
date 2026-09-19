@@ -52,7 +52,7 @@ does not receive partial credit. The written responses are graded separately.
 
 Open `notebooks/homework01_colab.ipynb` in Google Colab and run it from top to
 bottom. Its setup cell clones this repository and installs the required Python
-packages. This rehearsal copy clones the fixed `v0.16-test` release from the
+packages. This rehearsal copy clones the fixed `v0.17-test` release from the
 `mk-er` test repository.
 
 The notebook lets you develop both implementations interactively. A focused
@@ -105,6 +105,10 @@ do not edit the version number yourself; contact the course staff for
 inspection. The checker verifies only that the notebook can be processed by
 the grading system. It does not grade the answers, replace the public tests, or
 guarantee a particular mark.
+
+An unanswered code or report cell produces a warning rather than a structural
+error. Students may submit unanswered work, but it can receive zero points.
+Structural errors must still be fixed before submission.
 
 An unreadable file or a file that is not an `.ipynb` notebook cannot be graded
 and receives zero.
