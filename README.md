@@ -52,7 +52,7 @@ does not receive partial credit. The written responses are graded separately.
 
 Open `notebooks/homework01_colab.ipynb` in Google Colab and run it from top to
 bottom. Its setup cell clones this repository and installs the required Python
-packages. This rehearsal copy clones the fixed `v0.15-test` release from the
+packages. This rehearsal copy clones the fixed `v0.16-test` release from the
 `mk-er` test repository.
 
 The notebook lets you develop both implementations interactively. A focused
