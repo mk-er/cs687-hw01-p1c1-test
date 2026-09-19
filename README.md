@@ -1,7 +1,7 @@
 # CS 687 · Homework 1 · Project 1, Checkpoint 1
 
 > **TEST REPOSITORY:** This public repository exists only to rehearse the
-> student Colab workflow. It is not an announced course release.
+> student Colab and submission workflow. It is not an announced course release.
 
 This is a standalone student repository for Homework 1. It introduces
 byte-level byte-pair encoding, next-token training windows, embeddings, and the
@@ -10,108 +10,112 @@ units used to report language-model loss.
 You do not need another CS 687 code repository to complete this homework. A
 graphics card is not required.
 
-## What you must implement
+## What you must complete
 
-There are two incomplete tasks in the Colab notebook:
+The Colab notebook contains ten assessed answer cells:
+
+- four short guided-calculation cells;
+- two programming-task cells; and
+- four Markdown report-response cells.
+
+The programming tasks are:
 
 | task | tagged notebook cell | function or class |
 |---|---|---|
 | Task 1 | `answer-task-1` | `BPETokenizer.train` |
 | Task 2 | `answer-task-2` | `NextTokenDataset.__init__` |
 
-The answer cells contain `NotImplementedError` placeholders. The surrounding
-code is supplied complete. Your completed notebook is the authoritative code
-submission; you do not need to copy its implementations into `.py` files.
+All six code-answer cells contain `NotImplementedError` placeholders. The
+surrounding code is supplied complete. The four report cells contain written
+response placeholders. Your completed notebook is the authoritative submission;
+you do not need to copy its implementations into `.py` files.
 
-## Recommended route: Google Colab
+## Grading
+
+Homework 1 is graded out of 100 points:
+
+| assessed work | points |
+|---|---:|
+| Four guided calculations | 16 |
+| Task 1: BPE training | 14 |
+| Task 2: sliding-window dataset | 10 |
+| Four written responses | 60 |
+| **Total** | **100** |
+
+All six code exercises are graded all-or-nothing. Each guided calculation
+receives either 4 points or 0 points. Task 1 receives its 14 points only if it
+passes every staff-controlled Task 1 test, and Task 2 receives its 10 points
+only if it passes every staff-controlled Task 2 test. Partially correct code
+does not receive partial credit. The written responses are graded separately.
+
+## Google Colab
 
 Open `notebooks/homework01_colab.ipynb` in Google Colab and run it from top to
 bottom. Its setup cell clones this repository and installs the required Python
-packages. This test copy clones the fixed `v0.14-test` release from `mk-er`.
+packages. This rehearsal copy clones the fixed `v0.15-test` release from the
+`mk-er` test repository.
 
 The notebook lets you develop both implementations interactively. A focused
-public-test cell follows each answer cell so that you receive feedback before
-continuing. Near the end, a final cell runs all 31 public tests together. Run
+check follows each code-answer cell so that you receive feedback before
+continuing. Near the end, a final cell runs all 35 public tests together. Run
 these cells inside the notebook: a separate `pytest` process cannot see
 definitions that exist only in the notebook kernel.
-
-## Optional local route
-
-Python 3.10 or later is required. From the repository root:
-
-```text
-python -m venv .venv
-```
-
-On Windows PowerShell, activate it with:
-
-```text
-.\.venv\Scripts\Activate.ps1
-```
-
-On macOS or Linux, activate it with:
-
-```text
-source .venv/bin/activate
-```
-
-Then install the dependencies and open the notebook:
-
-```text
-python -m pip install -r requirements.txt
-python -m pip install jupyterlab
-python -m jupyter lab notebooks/homework01_colab.ipynb
-```
-
-The notebook workflow is the same locally and in Colab. Complete the tagged
-answer cells and use the notebook's public-test cell. The tests remain visible
-under `tests/`, but running them in a new shell process tests the untouched
-module skeletons rather than your in-memory notebook answers.
 
 ## Homework workflow
 
 1. Read the Lecture 1 notes.
-2. Complete Task 1 in the `answer-task-1` cell and work through the tokenizer
-   investigations that follow it.
-3. Complete Task 2 in the `answer-task-2` cell and work through the remaining
-   notebook experiments.
-4. Restart the runtime and run the complete notebook from top to bottom.
-5. Confirm that the public-test cell reports all 31 tests passing.
-6. Download the completed `.ipynb` file and complete the separate report
-   template.
+2. Work through the notebook in order. Complete all four guided-calculation
+   cells and the two programming-task cells, and run each immediate check.
+3. Restart the runtime and run the complete notebook from top to bottom.
+4. Confirm that the final cell repeats all four calculation checks and reports
+   all 35 programming tests passing.
+5. Complete the four questions in the notebook's report section,
+   using evidence from your notebook run.
 
 Do not modify the tests to make an implementation pass. The tests describe the
 required behavior and grading uses a staff-controlled copy.
 
 ## Deliverables
 
-- the completed Homework 1 notebook, including working implementations in both
-  tagged answer cells;
-- all 31 included tests passing;
-- a separate completed report containing the fertility table and two-sentence
-  reflection;
-- three comparisons with the GPT-2 tokenizer; and
-- answers to comprehension questions A–D in the report.
+- the completed Homework 1 notebook
 
-The notebook and report will be submitted through Moodle. Their exact filenames,
-the final report format, and the upload procedure will be announced before
-release. Do not submit the cloned repository, virtual environment, caches, or
-generated Python bytecode.
+The completed notebook is the single Homework 1 submission. Before uploading
+it to Moodle, rename it to `homework01_colab_STUDENTNUMBER.ipynb`, replacing
+`STUDENTNUMBER` with your student number; for example,
+`homework01_colab_21802962.ipynb`. Moodle's account record,
+rather than the filename alone, remains the authoritative student identity.
 
-## What happens in Homework 2
+## Submission structure check
 
-Homework 2 will be a new standalone repository containing the course's
-canonical Homework 1 implementation. Your ability to begin Homework 2 will not
-depend on carrying this checkout forward or on whether your implementation here
-matches the canonical one.
+Before uploading, run the public structure checker on the exact notebook file
+you intend to submit:
+
+```text
+python submission_check.py path/to/homework01_colab_STUDENTNUMBER.ipynb
+```
+
+If you work in Colab, first download the completed notebook and then run the
+final notebook cell. It opens an upload dialog and runs the checker on the
+`.ipynb` file you select. Select the exact downloaded file that you intend to
+submit. The command above remains the equivalent route for local work.
+
+Replace `STUDENTNUMBER` with your actual student number. Fix every reported
+error before submitting. If the checker reports an older assignment version,
+do not edit the version number yourself; contact the course staff for
+inspection. The checker verifies only that the notebook can be processed by
+the grading system. It does not grade the answers, replace the public tests, or
+guarantee a particular mark.
+
+An unreadable file or a file that is not an `.ipynb` notebook cannot be graded
+and receives zero.
 
 ## Repository layout
 
 ```text
+notebook_support.py  supplied setup and public-test helpers
+submission_check.py supplied pre-submission structure checker
 cs687/       supplied implementation modules used by the notebook
 tests/       inspectable public tests run by the notebook
-scripts/     tokenizer inspection and fertility experiments
 data/        the English–Turkish parallel corpus
 notebooks/   the Colab entry point and authoritative code submission
-REPORT.md    the current report template (final format still to be chosen)
 ```

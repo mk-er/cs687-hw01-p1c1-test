@@ -64,6 +64,60 @@ def test_never_reads_past_the_end():
         )
 
 
+def test_includes_an_exactly_fitting_final_window():
+    """A final window is valid when its last target is the stream's last token."""
+    ids = list(range(21))
+    ds = NextTokenDataset(ids, context_len=5, stride=5)
+
+    starts = [int(ds[i][0][0]) for i in range(len(ds))]
+    assert starts == [0, 5, 10, 15], (
+        "The window starting at 15 is valid: its five targets are tokens 16 "
+        f"through 20. Expected starts [0, 5, 10, 15], received {starts}."
+    )
+    assert int(ds[-1][1][-1]) == 20, (
+        "The final valid target should be the last token in the stream."
+    )
+
+
+def test_excludes_a_window_with_an_incomplete_target():
+    """Do not create a sample unless both input and target have context_len tokens."""
+    ids = list(range(20))
+    ds = NextTokenDataset(ids, context_len=5, stride=5)
+
+    starts = [int(ds[i][0][0]) for i in range(len(ds))]
+    assert starts == [0, 5, 10], (
+        "A window starting at 15 would have only four target tokens, so it "
+        f"must be excluded. Expected starts [0, 5, 10], received {starts}."
+    )
+
+
+def test_every_window_has_the_requested_length():
+    """Checking every sample catches a shortened final input or target."""
+    context_len = 7
+    ds = NextTokenDataset(list(range(31)), context_len=context_len, stride=4)
+
+    for index, (x, y) in enumerate(ds):
+        assert x.shape == (context_len,), (
+            f"Input window {index} has shape {tuple(x.shape)} instead of "
+            f"({context_len},)."
+        )
+        assert y.shape == (context_len,), (
+            f"Target window {index} has shape {tuple(y.shape)} instead of "
+            f"({context_len},)."
+        )
+
+
+def test_windows_use_integer_token_ids():
+    """Embedding layers require token identifiers with torch.long dtype."""
+    ds = NextTokenDataset(list(range(20)), context_len=5, stride=3)
+    x, y = ds[0]
+
+    assert x.dtype == torch.long and y.dtype == torch.long, (
+        "Input and target token IDs must use torch.long so they can index an "
+        f"embedding table. Received {x.dtype} and {y.dtype}."
+    )
+
+
 def test_loader_produces_batched_tensors():
     loader = make_loader(IDS, context_len=8, stride=4, batch_size=4, shuffle=False)
     x, y = next(iter(loader))

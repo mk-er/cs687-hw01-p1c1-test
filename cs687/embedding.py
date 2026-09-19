@@ -3,7 +3,7 @@ The input layer: token embeddings plus learned absolute position embeddings.
 
 This module is complete. It is given to you so that you can see how the linear
 map of Section 3.1 of the notes appears in PyTorch, and so that you can check
-the output shape at the end of the lab.
+the output shape in the homework.
 """
 
 import torch
@@ -16,13 +16,15 @@ class InputEmbedding(nn.Module):
     Input:  an integer tensor of shape (B, T) holding token ids.
     Output: a float tensor of shape (B, T, d_model).
 
-    The token embedding is the matrix Omega_e from the notes. Looking a token
-    up in it is exactly multiplying the matrix by a one-hot vector, with the
-    multiplication replaced by an index for efficiency.
+    In the notes, multiplying Omega_e by a one-hot vector selects the token's
+    column. PyTorch stores the transpose, with one row per token, and
+    nn.Embedding selects that row directly instead of performing the full
+    multiplication.
 
-    The position embedding exists because self-attention, which you meet in
-    Lecture 2, treats its inputs as an unordered set. Word order has to be put
-    into the representations, because the architecture will not preserve it.
+    Bare self-attention is permutation equivariant: reordering the input
+    vectors merely reorders the corresponding outputs without otherwise
+    changing them. Because word order changes meaning, position information
+    must therefore be added to the token representations explicitly.
     """
 
     def __init__(

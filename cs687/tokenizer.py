@@ -1,8 +1,8 @@
 """
 Byte-level byte-pair encoding.
 
-This module is the code from the Lecture 1 notes, Section 2.2. Two pieces
-have been removed for you to write. Everything else is complete and working.
+This module is the code from the Lecture 1 notes, Section 2.2. The training
+loop has been removed for you to write. Everything else is complete and working.
 
 Read the notes before starting. The algorithm is described there in full, and
 the hand-traced example (hug, pug, pun, bun, hugs) is the same example used by
@@ -38,22 +38,23 @@ class BPETokenizer:
     def _pretokenize(text: str) -> list[list[int]]:
         """Split text into chunks, and return each chunk as a list of byte values.
 
-        A chunk is one word together with the space that comes before it, so
-        the sentence "the cat" becomes the chunks "the" and " cat". Merges are
-        then only ever learned *within* a chunk, never across the boundary
-        between two words.
+        A chunk is one word together with the space that precedes it, except
+        for the first word, which has no preceding space. Thus "the cat sat"
+        becomes "the", " cat", and " sat". Merges are learned only within a
+        chunk, never across the boundary between two words.
 
-        Two reasons this step exists, and both matter:
+        This restriction is a design choice, not a requirement of BPE. Without
+        it, successive merges in "the cat" could create `e `, then `e c`, and
+        eventually a token for the whole phrase. That may compress the training
+        corpus well, but a phrase can be frequent because of that particular
+        corpus and rarely useful elsewhere. Keeping merges within words
+        encourages reusable pieces. It is not always better--a genuinely common
+        phrase can be useful--but it reduces corpus-specific phrase tokens.
 
-        1. Without it, the algorithm would happily learn a token spanning the
-           end of one word and the start of the next, such as " p" in a corpus
-           full of "pug" and "pun". Such tokens waste vocabulary and depend on
-           accidents of word order. Every production tokenizer pre-splits.
-
-        2. It is the reason that " the" (with a leading space) and "the"
-           (without one) are different tokens with independently learned
-           representations, which is one of the tokenization artifacts
-           discussed in Section 2.3 of the notes.
+        The preceding space remains in the following word's chunk, so a space
+        may still merge with the first letter. Consequently, " the" and "the"
+        are different byte sequences and can receive different tokens with
+        independently learned representations, as Section 2.3 discusses.
 
         This helper is complete. You do not need to change it.
         """
@@ -101,7 +102,7 @@ class BPETokenizer:
         Hints:
             - Counter() starts empty and you can update it chunk by chunk:
               `counts.update(zip(chunk, chunk[1:]))`.
-            - max(pairs, key=pairs.get) returns the most frequent pair.
+            - max(counts, key=counts.get) returns the most frequent pair.
             - A list comprehension rewrites every chunk in one line.
 
         Args:
@@ -141,9 +142,10 @@ class BPETokenizer:
         """Encode a string into a list of token ids.
 
         Merges are applied in the order they were learned, which is the order
-        of increasing new id. Applying whichever merge is most frequent instead
-        is a common bug: it appears to work, and it silently produces
-        tokenizations that differ from the ones seen during training.
+        of increasing new id. Recounting pairs in the new input and applying
+        whichever pair is currently most frequent is a common bug: decoding
+        may still recover the text, but the resulting token sequence can differ
+        from the one implied by the trained tokenizer.
         """
         if self.special_tokens:
             import re
@@ -185,7 +187,7 @@ class BPETokenizer:
         return b"".join(self.vocab[i] for i in ids).decode("utf-8", errors="replace")
 
     # ------------------------------------------------------------------
-    # Special tokens (Lecture 1, Section 2.2a). Complete; you do not write this,
+    # Special tokens (Lecture 1, Section 2.2). Complete; you do not write this,
     # but Lecture 12 is built on it, so read it.
     # ------------------------------------------------------------------
     def add_special_tokens(self, tokens: tuple[str, ...]) -> dict[str, int]:

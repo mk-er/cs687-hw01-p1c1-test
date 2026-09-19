@@ -1,9 +1,10 @@
 """
 Unit conversions from Section 1.3 of the notes.
 
-A loss can be reported in four units. Three of them depend on the tokenizer.
-One does not. These functions are complete; you use them in the fertility
-experiment and again in your Project 1 report.
+The same predictive performance can be summarized as loss in nats per token,
+perplexity, bits per token, or bits per byte. The first three depend on the
+tokenizer; bits per byte is comparable across tokenizers. These functions are
+complete; you use them in the fertility experiment and Project 1 report.
 """
 
 import math

@@ -15,8 +15,8 @@ def test_output_shape():
     )
 
 
-def test_embedding_lookup_selects_a_column():
-    """Section 3.1: the lookup is a linear map applied to a one-hot vector."""
+def test_embedding_lookup_matches_one_hot_matrix_multiplication():
+    """PyTorch's row lookup matches the transposed notation in Section 3.1."""
     emb = InputEmbedding(vocab_size=10, d_model=8, max_len=4, dropout=0.0)
     emb.eval()
     with torch.no_grad():
