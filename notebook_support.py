@@ -36,6 +36,52 @@ def prepare_notebook(repo_root: Path) -> Path:
     return repo_root
 
 
+def check_saved_submission(
+    upload_files: Callable[[], dict[str, bytes]] | None = None,
+) -> None:
+    """Upload and structurally check the exact notebook intended for submission.
+
+    In Colab, calling this function with no arguments opens the browser upload
+    dialog. The optional callback exists so the public workflow can be tested
+    without depending on the Colab interface.
+    """
+    if upload_files is None:
+        try:
+            from google.colab import files
+        except ImportError:
+            print(
+                "Local execution: save the completed notebook, then run:\n"
+                "python submission_check.py "
+                "path/to/homework01_colab_STUDENTNUMBER.ipynb"
+            )
+            return
+        upload_files = files.upload
+
+    uploaded = upload_files()
+    notebook_names = [name for name in uploaded if name.lower().endswith(".ipynb")]
+    if len(uploaded) != 1 or len(notebook_names) != 1:
+        raise RuntimeError("Upload exactly one completed .ipynb notebook.")
+
+    notebook_path = Path.cwd() / Path(notebook_names[0]).name
+    checker_path = Path(__file__).resolve().with_name("submission_check.py")
+    result = subprocess.run(
+        [sys.executable, str(checker_path), str(notebook_path)],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.stdout:
+        print(result.stdout, end="")
+    if result.stderr:
+        print(result.stderr, end="", file=sys.stderr)
+    if result.returncode != 0:
+        raise AssertionError(
+            "The saved notebook did not pass the structure check. "
+            "Fix every message above, download it again, and rerun this cell."
+        )
+    print("Structure check passed. Submit this same file to Moodle.")
+
+
 def _is_incomplete(function: Callable[..., object]) -> bool:
     """Return whether an answer still contains its supplied placeholder."""
     return "NotImplementedError" in function.__code__.co_names
